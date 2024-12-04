@@ -1,0 +1,35 @@
+version: v1
+
+plugins:
+  - plugin: buf.build/protocolbuffers/go:v1.29.0
+    out: pkg/api/go
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/grpc/go:v1.3.0
+    out: pkg/api/go
+    opt:
+      - paths=source_relative
+  - name: gorm-enum
+    out: pkg/api/go
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/bufbuild/validate-go:v0.9.1
+    out: pkg/api/go
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/grpc-ecosystem/gateway:v2.15.2
+    out: pkg/api/go
+    opt:
+      - allow_patch_feature=false
+      - paths=source_relative
+  - plugin: buf.build/grpc-ecosystem/openapiv2:v2.15.2
+    out: pkg/api/go
+  - plugin: buf.build/protocolbuffers/js:v3.21.2
+    out: ../tools/proto/pkg/javascript
+    opt:
+      - import_style=commonjs
+  - plugin: buf.build/grpc/web:v1.4.2
+    out: ../tools/proto/pkg/javascript
+    opt:
+      - import_style=commonjs+dts
+      - mode=grpcwebtext

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/model;model";
+option optimize_for = SPEED;
+
+enum SubscriptionPlanTier {
+  SPT_NONE = 0;
+  SPT_BRONZE = 1;
+  SPT_SILVER = 2;
+  SPT_GOLD = 3;
+  SPT_PLATINUM = 4;
+}

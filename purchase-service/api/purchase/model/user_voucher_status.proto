@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/model;model";
+option optimize_for = SPEED;
+
+enum UserVoucherStatus {
+  UVS_NONE = 0;
+  UVS_ALLOCATED = 1;
+  UVS_USED = 2;
+  UVS_EXPIRED = 3;
+}

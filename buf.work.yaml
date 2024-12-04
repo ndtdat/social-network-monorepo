@@ -1,0 +1,4 @@
+version: v1
+directories:
+  - user-service/api
+  - purchase-service/api

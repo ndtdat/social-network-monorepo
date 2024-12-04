@@ -1,0 +1,5 @@
+rule:
+  servicePath: "/user.User"
+  authRoutes:
+#    - endpoint:
+#      accessibleRoles: []

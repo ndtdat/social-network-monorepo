@@ -1,0 +1,53 @@
+http:
+  host:
+  port: 9092
+  disableGRPCGateway: false
+  path: /api/purchase/
+
+grpc:
+  host:
+  port: 8602
+  maxConnectionAge: 1h
+  authenticationEnabled: true
+  authorizationEnabled: true
+  reflectionEnabled: true
+
+environment: LOCAL
+
+mysql:
+  host:
+  port: 3308
+  db: purchase
+  user: root
+  password: 5cbcc73a0ba2be5
+  isolationLevel: READ_COMMITTED
+  migration:
+    enabled: true
+    sourceURL: file://db/migration/mysql
+
+redis:
+  host:
+  port: 6379
+  db: 0
+  password:
+  disableRetry: true
+  clientSideCaching:
+    enabled: false
+    cacheSizeMegaBytes: 128
+    broadcastMode: true
+    prefixes:
+
+jwt:
+  algo: EDDSA
+  publicKey:
+    file: config/local_jwt/pk.pem
+    secret:
+      name:
+  privateKey:
+    file: config/local_jwt/sk.pem
+    secret:
+      name:
+  issuer: TIENDAT
+  accessTokenDuration: 24h
+  refreshTokenDuration: 240h
+  activeTokenDuration: 5m

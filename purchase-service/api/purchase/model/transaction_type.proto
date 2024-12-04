@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/model;model";
+option optimize_for = SPEED;
+
+enum TransactionType {
+  TT_NONE = 0;
+  TT_BUY = 1;
+  VS_DISCOUNT = 2;
+}

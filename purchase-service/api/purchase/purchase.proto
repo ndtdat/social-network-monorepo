@@ -1,0 +1,11 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+package purchase;
+option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase;purchase";
+
+service Purchase {}
+

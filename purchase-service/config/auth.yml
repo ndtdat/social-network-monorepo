@@ -1,0 +1,5 @@
+rule:
+  servicePath: "/purchase.Purchase"
+  authRoutes:
+#    - endpoint:
+#      accessibleRoles: []
