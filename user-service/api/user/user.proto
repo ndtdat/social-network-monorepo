@@ -4,6 +4,7 @@ option optimize_for = SPEED;
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "user/rpc/register.proto";
+import "user/rpc/login.proto";
 
 package user;
 option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user;user";
@@ -12,6 +13,13 @@ service User {
   rpc Register(rpc.RegisterRequest) returns (rpc.RegisterReply) {
     option (google.api.http) = {
       post: "/api/user/register"
+      body: "*"
+    };
+  }
+
+  rpc Login(rpc.LoginRequest) returns (rpc.LoginReply) {
+    option (google.api.http) = {
+      post: "/api/user/login"
       body: "*"
     };
   }

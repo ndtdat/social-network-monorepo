@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package rpc;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/rpc;rpc";
+option optimize_for = SPEED;
+
+message LoginRequest {
+  string email = 1 [(validate.rules).string = {
+    min_len: 5,
+    max_len: 320,
+    email: true
+  }];
+  string password = 2 [(validate.rules).string = {
+    min_len: 6,
+    max_len: 20,
+    pattern: "^[a-zA-Z0-9`!@#$%^&*()_+\\-=[\\]{};,.<>?~']+$"
+  }];
+}
+
+message LoginReply {
+  string access_token = 1;
+}
+
+

@@ -27,3 +27,5 @@ var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb
 goog.object.extend(proto, google_protobuf_empty_pb);
 var user_rpc_register_pb = require('../user/rpc/register_pb.js');
 goog.object.extend(proto, user_rpc_register_pb);
+var user_rpc_login_pb = require('../user/rpc/login_pb.js');
+goog.object.extend(proto, user_rpc_login_pb);

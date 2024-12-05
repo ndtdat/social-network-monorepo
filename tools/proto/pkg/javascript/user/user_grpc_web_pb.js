@@ -25,6 +25,8 @@ var google_api_annotations_pb = require('../google/api/annotations_pb.js')
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js')
 
 var user_rpc_register_pb = require('../user/rpc/register_pb.js')
+
+var user_rpc_login_pb = require('../user/rpc/login_pb.js')
 const proto = {};
 proto.user = require('./user_pb.js');
 
@@ -138,6 +140,67 @@ proto.user.UserPromiseClient.prototype.register =
       request,
       metadata || {},
       methodDescriptor_User_Register);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.rpc.LoginRequest,
+ *   !proto.rpc.LoginReply>}
+ */
+const methodDescriptor_User_Login = new grpc.web.MethodDescriptor(
+  '/user.User/Login',
+  grpc.web.MethodType.UNARY,
+  user_rpc_login_pb.LoginRequest,
+  user_rpc_login_pb.LoginReply,
+  /**
+   * @param {!proto.rpc.LoginRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  user_rpc_login_pb.LoginReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.rpc.LoginRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.rpc.LoginReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.rpc.LoginReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.user.UserClient.prototype.login =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/user.User/Login',
+      request,
+      metadata || {},
+      methodDescriptor_User_Login,
+      callback);
+};
+
+
+/**
+ * @param {!proto.rpc.LoginRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.rpc.LoginReply>}
+ *     Promise that resolves to the response
+ */
+proto.user.UserPromiseClient.prototype.login =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/user.User/Login',
+      request,
+      metadata || {},
+      methodDescriptor_User_Login);
 };
 
 

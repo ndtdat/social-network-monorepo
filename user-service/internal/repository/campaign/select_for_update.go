@@ -2,7 +2,6 @@ package campaign
 
 import (
 	"errors"
-	"fmt"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/sqlutil"
 	"github.com/ndtdat/social-network-monorepo/user-service/internal/model"
 	pbmodel "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/model"
@@ -24,7 +23,7 @@ func (r *Repository) SelectForUpdate(
 		First(&result).
 		Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, fmt.Errorf("cannot find valid campaign with code(%v)", code)
+			return nil, nil
 		}
 
 		return nil, err
