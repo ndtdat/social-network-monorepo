@@ -12,19 +12,19 @@ type VoucherConfiguration struct {
 	CurrencySymbol  string                       `gorm:"default:null"`
 	Value           decimal.Decimal              `gorm:"type:decimal(23,8)"`
 
-	MaxQty       uint32 `gorm:" not null"`
-	AllocatedQty uint32 `gorm:" not null"`
-	RedeemedQty  uint32 `gorm:" not null"`
+	MaxQty       uint32 `gorm:"not null"`
+	AllocatedQty uint32 `gorm:"not null"`
+	RedeemedQty  uint32 `gorm:"not null"`
 
-	StartAt uint64 `gorm:"not null"`
-	EndAt   uint64 `gorm:"not null"`
+	StartAt uint64 `gorm:"not null;index"`
+	EndAt   uint64 `gorm:"not null;index"`
 
-	Status model.VoucherStatus `gorm:"not null;type:enum('VS_DRAFT','VS_AVAILABLE','VS_UNAVAILABLE')"`
+	Status model.VoucherStatus `gorm:"not null;type:enum('VS_DRAFT','VS_AVAILABLE','VS_UNAVAILABLE');index"`
 
-	AppliedTier model.SubscriptionPlanTier `gorm:"not null;type:enum('SPT_BRONZE','SPT_SILVER','SPT_GOLD','SPT_PLATINUM')"`
+	AppliedTier model.SubscriptionPlanTier `gorm:"not null;type:enum('SPT_BRONZE','SPT_SILVER','SPT_GOLD','SPT_PLATINUM');index"`
 
 	Type       model.VoucherGroupType `gorm:"not null;index;type:enum('VGT_CAMPAIGN')"`
-	CampaignID uint64                 `gorm:"default:null"`
+	CampaignID uint64                 `gorm:"default:null;index"`
 
 	CreatedAt uint64
 	UpdatedAt uint64

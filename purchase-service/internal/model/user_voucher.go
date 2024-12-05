@@ -5,12 +5,12 @@ import "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/pu
 type UserVoucher struct {
 	ID uint64 `gorm:"primaryKey"`
 
-	UserID                 uint64                `gorm:"not null"`
-	VoucherConfigurationID uint64                `gorm:"not null"`
+	UserID                 uint64                `gorm:"not null;index"`
+	VoucherConfigurationID uint64                `gorm:"not null;index"`
 	VoucherCode            string                `gorm:"not null;unique"`
 	VoucherConfiguration   *VoucherConfiguration `gorm:"foreignKey:VoucherConfigurationID"`
 
-	ExpiredAt uint64 `gorm:"not null"`
+	ExpiredAt uint64 `gorm:"not null;index"`
 
 	Status    model.UserVoucherStatus `gorm:"not null;index;type:enum('UVS_ALLOCATED','UVS_USED','UVS_EXPIRED')"`
 	CreatedAt uint64
