@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package common;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/ndtdat/social-network-monorepo/common/pkg/api/go/common;common";
+
+message Pong {}

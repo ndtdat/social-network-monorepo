@@ -3,6 +3,7 @@ package auth
 import (
 	jwtbase "github.com/ndtdat/social-network-monorepo/gokit/pkg/jwt/base"
 	"github.com/ndtdat/social-network-monorepo/user-service/internal/repository/user"
+	"github.com/ndtdat/social-network-monorepo/user-service/internal/service/agent/purchase"
 	"github.com/ndtdat/social-network-monorepo/user-service/internal/service/self/campaign"
 	"github.com/ndtdat/social-network-monorepo/user-service/internal/service/self/usercampaign"
 	"go.uber.org/zap"
@@ -16,11 +17,12 @@ type Service struct {
 	repo                *user.Repository
 	campaignService     *campaign.Service
 	userCampaignService *usercampaign.Service
+	purchaseService     *purchase.Service
 }
 
 func NewService(
 	logger *zap.Logger, jm jwtbase.Manager, db *gorm.DB, repo *user.Repository, campaignService *campaign.Service,
-	userCampaignService *usercampaign.Service,
+	userCampaignService *usercampaign.Service, purchaseService *purchase.Service,
 ) *Service {
 	return &Service{
 		logger:              logger,
@@ -29,5 +31,6 @@ func NewService(
 		repo:                repo,
 		campaignService:     campaignService,
 		userCampaignService: userCampaignService,
+		purchaseService:     purchaseService,
 	}
 }

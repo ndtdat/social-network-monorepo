@@ -1,0 +1,4 @@
+service:
+  purchase:
+    host:
+    port: 8602

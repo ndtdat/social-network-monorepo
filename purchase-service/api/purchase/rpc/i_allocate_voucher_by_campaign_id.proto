@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package rpc;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/rpc;rpc";
+option optimize_for = SPEED;
+
+message IAllocateVoucherByCampaignIDRequest {
+  uint64 user_id = 1 [(validate.rules).uint64.gt = 1];
+  uint64 campaign_id = 2 [(validate.rules).uint64.gt = 1];
+}
+
+

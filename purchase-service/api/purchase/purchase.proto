@@ -3,9 +3,12 @@ option optimize_for = SPEED;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "purchase/rpc/i_allocate_voucher_by_campaign_id.proto";
 
 package purchase;
 option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase;purchase";
 
-service Purchase {}
+service Purchase {
+  rpc IAllocateVoucherByCampaignID(rpc.IAllocateVoucherByCampaignIDRequest) returns (google.protobuf.Empty);
+}
 

@@ -25,3 +25,5 @@ var google_api_annotations_pb = require('../google/api/annotations_pb.js');
 goog.object.extend(proto, google_api_annotations_pb);
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 goog.object.extend(proto, google_protobuf_empty_pb);
+var purchase_rpc_i_allocate_voucher_by_campaign_id_pb = require('../purchase/rpc/i_allocate_voucher_by_campaign_id_pb.js');
+goog.object.extend(proto, purchase_rpc_i_allocate_voucher_by_campaign_id_pb);

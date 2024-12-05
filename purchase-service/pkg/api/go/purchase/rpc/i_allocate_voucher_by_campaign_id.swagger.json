@@ -1,14 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "purchase/purchase.proto",
+    "title": "purchase/rpc/i_allocate_voucher_by_campaign_id.proto",
     "version": "version not set"
   },
-  "tags": [
-    {
-      "name": "Purchase"
-    }
-  ],
   "consumes": [
     "application/json"
   ],

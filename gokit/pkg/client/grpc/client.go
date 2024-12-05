@@ -5,7 +5,6 @@ import (
 	"crypto/x509"
 	"fmt"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/common"
-	"github.com/ndtdat/social-network-monorepo/gokit/pkg/config"
 	"time"
 
 	"google.golang.org/grpc"
@@ -13,8 +12,6 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/credentials/xds"
 	"google.golang.org/grpc/metadata"
-	grpctrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/google.golang.org/grpc"
-
 	//noline:revive
 	_ "google.golang.org/grpc/resolver"
 	_ "google.golang.org/grpc/xds"
@@ -28,7 +25,7 @@ type Client struct {
 }
 
 func NewClient(
-	ctx context.Context, host, port string, tls bool, tracingCfg *config.Tracing, opts ...grpc.DialOption,
+	ctx context.Context, host, port string, tls bool, opts ...grpc.DialOption,
 ) (*Client, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
@@ -41,15 +38,6 @@ func NewClient(
 
 	unaryClientInterceptors := []grpc.UnaryClientInterceptor{
 		gRPCClient.injectRequestMetadata,
-	}
-
-	if tracingCfg.Enabled {
-		unaryClientInterceptors = append(
-			unaryClientInterceptors,
-			grpctrace.UnaryClientInterceptor(
-				grpctrace.WithServiceName(fmt.Sprintf("rpc.%s", tracingCfg.ServiceName)),
-			),
-		)
 	}
 
 	options := []grpc.DialOption{

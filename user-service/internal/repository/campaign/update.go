@@ -8,9 +8,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func (r *Repository) UpdateWithTx(tx *gorm.DB, campaignInfo *model.Campaign) error {
+func (r *Repository) UpdateWithTx(tx *gorm.DB, campaignID uint64) error {
 	return tx.Model(&model.Campaign{}).
-		Where(sqlutil.EqualClause(model.Campaign_ID), campaignInfo.ID).
+		Where(sqlutil.EqualClause(model.Campaign_ID), campaignID).
 		Updates(map[string]any{
 			model.Campaign_JOINED_QTY: gorm.Expr(
 				fmt.Sprintf("%s + 1", model.Campaign_JOINED_QTY),
