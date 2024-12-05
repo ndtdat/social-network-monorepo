@@ -23,6 +23,8 @@ grpc.web = require('grpc-web');
 var google_api_annotations_pb = require('../google/api/annotations_pb.js')
 
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js')
+
+var user_rpc_register_pb = require('../user/rpc/register_pb.js')
 const proto = {};
 proto.user = require('./user_pb.js');
 
@@ -75,6 +77,67 @@ proto.user.UserPromiseClient =
    */
   this.hostname_ = hostname.replace(/\/+$/, '');
 
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.rpc.RegisterRequest,
+ *   !proto.rpc.RegisterReply>}
+ */
+const methodDescriptor_User_Register = new grpc.web.MethodDescriptor(
+  '/user.User/Register',
+  grpc.web.MethodType.UNARY,
+  user_rpc_register_pb.RegisterRequest,
+  user_rpc_register_pb.RegisterReply,
+  /**
+   * @param {!proto.rpc.RegisterRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  user_rpc_register_pb.RegisterReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.rpc.RegisterRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.rpc.RegisterReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.rpc.RegisterReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.user.UserClient.prototype.register =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/user.User/Register',
+      request,
+      metadata || {},
+      methodDescriptor_User_Register,
+      callback);
+};
+
+
+/**
+ * @param {!proto.rpc.RegisterRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.rpc.RegisterReply>}
+ *     Promise that resolves to the response
+ */
+proto.user.UserPromiseClient.prototype.register =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/user.User/Register',
+      request,
+      metadata || {},
+      methodDescriptor_User_Register);
 };
 
 

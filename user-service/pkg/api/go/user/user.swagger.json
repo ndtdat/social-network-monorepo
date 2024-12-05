@@ -4,13 +4,51 @@
     "title": "user/user.proto",
     "version": "version not set"
   },
+  "tags": [
+    {
+      "name": "User"
+    }
+  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/api/user/register": {
+      "post": {
+        "operationId": "User_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/rpcRegisterReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/rpcRegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    }
+  },
   "definitions": {
     "protobufAny": {
       "type": "object",
@@ -20,6 +58,28 @@
         }
       },
       "additionalProperties": {}
+    },
+    "rpcRegisterReply": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "rpcRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "campaignCode": {
+          "type": "string"
+        }
+      }
     },
     "rpcStatus": {
       "type": "object",

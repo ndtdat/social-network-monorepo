@@ -81,7 +81,7 @@ func registerAppHooks(
 					pb.RegisterUserServer(grpcServer, server)
 				}
 
-				go service.Serve(appContext, nil)
+				go service.Serve(appContext, pb.RegisterUserHandler)
 
 				return nil
 			},
