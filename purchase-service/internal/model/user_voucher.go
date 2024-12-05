@@ -18,12 +18,14 @@ type UserVoucher struct {
 }
 
 const (
-	UserVoucherTableName         = "user_vouchers"
-	UserVoucher_USER_ID          = "user_id"
-	UserVoucher_VOUCHER_GROUP_ID = "voucher_group_id"
-	UserVoucher_VOUCHER_CODE     = "voucher_code"
-	UserVoucher_STATUS           = "status"
-	UserVoucher_EXPIRED_AT       = "expired_at"
-	UserVoucher_CREATED_AT       = "created_at"
-	UserVoucher_UPDATED_AT       = "updated_at"
+	UserVoucherTableName                      = "user_vouchers"
+	UserVoucher_PRELOAD_VOUCHER_CONFIGURATION = "VoucherConfiguration"
+	UserVoucher_ID                            = "id"
+	UserVoucher_USER_ID                       = "user_id"
+	UserVoucher_VOUCHER_GROUP_ID              = "voucher_group_id"
+	UserVoucher_VOUCHER_CODE                  = "voucher_code"
+	UserVoucher_STATUS                        = "status"
+	UserVoucher_EXPIRED_AT                    = "expired_at"
+	UserVoucher_CREATED_AT                    = "created_at"
+	UserVoucher_UPDATED_AT                    = "updated_at"
 )

@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/model"
 	"github.com/shopspring/decimal"
 )
 
@@ -13,8 +14,8 @@ type Transaction struct {
 	DiscountAmount decimal.Decimal `gorm:"not null;type:decimal(23,8')"`
 	ActualAmount   decimal.Decimal `gorm:"not null;type:decimal(23,8')"`
 
-	SubscriptionPlanID uint64 `gorm:"not null"`
-	UserVoucherID      uint64 `gorm:"default null"`
+	SubscriptionPlanTier model.SubscriptionPlanTier `gorm:"type:enum('SPT_BRONZE','SPT_SILVER','SPT_GOLD','SPT_PLATINUM');default:null"`
+	UserVoucherID        uint64                     `gorm:"default null"`
 
 	CreatedAt uint64
 	UpdatedAt uint64

@@ -8,9 +8,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func (r *Repository) IncreaseAllocatedQty(tx *gorm.DB, voucherConfigurationID uint64) error {
+func (r *Repository) IncreaseAllocatedQty(tx *gorm.DB, id uint64) error {
 	return tx.Model(&model.VoucherConfiguration{}).
-		Where(sqlutil.EqualClause(model.VoucherConfiguration_ID), voucherConfigurationID).
+		Where(sqlutil.EqualClause(model.VoucherConfiguration_ID), id).
 		Updates(map[string]any{
 			model.VoucherConfiguration_ALLOCATED_QTY: gorm.Expr(
 				fmt.Sprintf("%s + 1", model.VoucherConfiguration_ALLOCATED_QTY),

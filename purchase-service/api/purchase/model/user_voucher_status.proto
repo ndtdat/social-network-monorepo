@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package model;
 
-option go_package = "github.com/ndtdat/social-network-monorepo/user-service/pkg/api/go/user/model;model";
+option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/model;model";
 option optimize_for = SPEED;
 
 enum UserVoucherStatus {

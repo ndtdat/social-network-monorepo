@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package model;
+
+import "purchase/model/subscription_plan_tier.proto";
+
+option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/model;model";
+option optimize_for = SPEED;
+
+message DetailedSubscriptionPlan {
+  uint64 user_id = 1;
+  uint64 subscription_plan_id = 2;
+  model.SubscriptionPlanTier tier = 3;
+  string currency_symbol = 4;
+  string amount = 5;
+  string discount_amount = 6;
+}

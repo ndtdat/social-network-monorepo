@@ -16,7 +16,6 @@ type SubscriptionPlan struct {
 
 const (
 	SubscriptionPlanTableName        = "subscription_plans"
-	SubscriptionPlan_ID              = "id"
 	SubscriptionPlan_TIER            = "tier"
 	SubscriptionPlan_CURRENCY_SYMBOL = "currency_symbol"
 	SubscriptionPlan_PRICE           = "price"

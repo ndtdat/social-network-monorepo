@@ -42,6 +42,7 @@ const (
 	VoucherConfiguration_START_AT         = "start_at"
 	VoucherConfiguration_END_AT           = "end_at"
 	VoucherConfiguration_STATUS           = "status"
+	VoucherConfiguration_APPLIED_TIER     = "applied_tier"
 	VoucherConfiguration_TYPE             = "type"
 	VoucherConfiguration_CAMPAIGN_ID      = "campaign_id"
 	VoucherConfiguration_CREATED_AT       = "created_at"
