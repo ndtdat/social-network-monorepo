@@ -25,6 +25,8 @@ var google_api_annotations_pb = require('../google/api/annotations_pb.js')
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js')
 
 var purchase_rpc_i_allocate_voucher_by_campaign_id_pb = require('../purchase/rpc/i_allocate_voucher_by_campaign_id_pb.js')
+
+var purchase_rpc_buy_subscription_plan_pb = require('../purchase/rpc/buy_subscription_plan_pb.js')
 const proto = {};
 proto.purchase = require('./purchase_pb.js');
 
@@ -138,6 +140,67 @@ proto.purchase.PurchasePromiseClient.prototype.iAllocateVoucherByCampaignID =
       request,
       metadata || {},
       methodDescriptor_Purchase_IAllocateVoucherByCampaignID);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.rpc.BuySubscriptionPlanRequest,
+ *   !proto.rpc.BuySubscriptionPlanReply>}
+ */
+const methodDescriptor_Purchase_BuySubscriptionPlan = new grpc.web.MethodDescriptor(
+  '/purchase.Purchase/BuySubscriptionPlan',
+  grpc.web.MethodType.UNARY,
+  purchase_rpc_buy_subscription_plan_pb.BuySubscriptionPlanRequest,
+  purchase_rpc_buy_subscription_plan_pb.BuySubscriptionPlanReply,
+  /**
+   * @param {!proto.rpc.BuySubscriptionPlanRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  purchase_rpc_buy_subscription_plan_pb.BuySubscriptionPlanReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.rpc.BuySubscriptionPlanRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.rpc.BuySubscriptionPlanReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.rpc.BuySubscriptionPlanReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.purchase.PurchaseClient.prototype.buySubscriptionPlan =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/purchase.Purchase/BuySubscriptionPlan',
+      request,
+      metadata || {},
+      methodDescriptor_Purchase_BuySubscriptionPlan,
+      callback);
+};
+
+
+/**
+ * @param {!proto.rpc.BuySubscriptionPlanRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.rpc.BuySubscriptionPlanReply>}
+ *     Promise that resolves to the response
+ */
+proto.purchase.PurchasePromiseClient.prototype.buySubscriptionPlan =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/purchase.Purchase/BuySubscriptionPlan',
+      request,
+      metadata || {},
+      methodDescriptor_Purchase_BuySubscriptionPlan);
 };
 
 

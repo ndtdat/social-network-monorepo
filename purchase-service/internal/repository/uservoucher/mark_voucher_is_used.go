@@ -9,7 +9,7 @@ import (
 
 func (r *Repository) MarkVoucherIsUsed(tx *gorm.DB, id uint64) error {
 	return tx.Model(&model.UserVoucher{}).
-		Where(sqlutil.InClause(model.UserVoucher_USER_ID), id).
+		Where(sqlutil.EqualClause(model.UserVoucher_ID), id).
 		Updates(map[string]any{
 			model.UserVoucher_STATUS: model2.UserVoucherStatus_UVS_USED,
 		}).Error

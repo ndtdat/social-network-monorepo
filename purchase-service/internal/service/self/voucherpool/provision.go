@@ -2,13 +2,12 @@ package voucherpool
 
 import "context"
 
-const (
-	provisionTarget    = 200
-	provisionMaxPerRun = 50
-)
-
 func (s *Service) Provision(ctx context.Context) error {
-	repo := s.repo
+	var (
+		repo               = s.repo
+		provisionTarget    = s.serviceCfg.ProvisionVoucherCodeCron.Target
+		provisionMaxPerRun = s.serviceCfg.ProvisionVoucherCodeCron.Target
+	)
 
 	availableTotal, err := repo.GetAvailableTotal(ctx)
 	if err != nil {

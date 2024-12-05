@@ -15,8 +15,77 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/api/purchase/buy": {
+      "post": {
+        "operationId": "Purchase_BuySubscriptionPlan",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/rpcBuySubscriptionPlanReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/rpcBuySubscriptionPlanRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Purchase"
+        ]
+      }
+    }
+  },
   "definitions": {
+    "modelDetailedSubscriptionPlan": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "subscriptionPlanId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "tier": {
+          "$ref": "#/definitions/modelSubscriptionPlanTier"
+        },
+        "currencySymbol": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "discountAmount": {
+          "type": "string"
+        }
+      }
+    },
+    "modelSubscriptionPlanTier": {
+      "type": "string",
+      "enum": [
+        "SPT_NONE",
+        "SPT_BRONZE",
+        "SPT_SILVER",
+        "SPT_GOLD",
+        "SPT_PLATINUM"
+      ],
+      "default": "SPT_NONE"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -25,6 +94,22 @@
         }
       },
       "additionalProperties": {}
+    },
+    "rpcBuySubscriptionPlanReply": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/modelDetailedSubscriptionPlan"
+        }
+      }
+    },
+    "rpcBuySubscriptionPlanRequest": {
+      "type": "object",
+      "properties": {
+        "subscriptionPlanTier": {
+          "$ref": "#/definitions/modelSubscriptionPlanTier"
+        }
+      }
     },
     "rpcStatus": {
       "type": "object",

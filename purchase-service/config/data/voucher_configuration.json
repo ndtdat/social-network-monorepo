@@ -1,0 +1,17 @@
+[
+  {
+    "id": 8686868686,
+    "calculationType": 1,
+    "currencySymbol": "VND",
+    "value": "0.3",
+    "maxQty": 100,
+    "allocatedQty": 0,
+    "redeemedQty": 0,
+    "startAt": 1732986000,
+    "endAt": 1735578000,
+    "status": 2,
+    "appliedTier": 2,
+    "type": 1,
+    "campaignID": 123456
+  }
+]

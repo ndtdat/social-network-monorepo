@@ -1,6 +1,7 @@
 package subscriptionplan
 
 import (
+	"github.com/ndtdat/social-network-monorepo/purchase-service/config"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/repository/subscriptionplan"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/repository/transaction"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/repository/usertier"
@@ -11,6 +12,7 @@ import (
 
 type Service struct {
 	db                   *gorm.DB
+	serviceCfg           *config.Service
 	userTierRepo         *usertier.Repository
 	subscriptionPlanRepo *subscriptionplan.Repository
 	userVoucherRepo      *uservoucher.Repository
@@ -19,11 +21,13 @@ type Service struct {
 }
 
 func NewService(
-	db *gorm.DB, userTierRepo *usertier.Repository, subscriptionPlanRepo *subscriptionplan.Repository,
-	userVoucherRepo *uservoucher.Repository, voucherService *voucher.Service, transactionRepo *transaction.Repository,
+	db *gorm.DB, serviceCfg *config.Service, userTierRepo *usertier.Repository,
+	subscriptionPlanRepo *subscriptionplan.Repository, userVoucherRepo *uservoucher.Repository,
+	voucherService *voucher.Service, transactionRepo *transaction.Repository,
 ) *Service {
 	return &Service{
 		db:                   db,
+		serviceCfg:           serviceCfg,
 		userTierRepo:         userTierRepo,
 		subscriptionPlanRepo: subscriptionPlanRepo,
 		userVoucherRepo:      userVoucherRepo,

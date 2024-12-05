@@ -27,3 +27,5 @@ var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb
 goog.object.extend(proto, google_protobuf_empty_pb);
 var purchase_rpc_i_allocate_voucher_by_campaign_id_pb = require('../purchase/rpc/i_allocate_voucher_by_campaign_id_pb.js');
 goog.object.extend(proto, purchase_rpc_i_allocate_voucher_by_campaign_id_pb);
+var purchase_rpc_buy_subscription_plan_pb = require('../purchase/rpc/buy_subscription_plan_pb.js');
+goog.object.extend(proto, purchase_rpc_buy_subscription_plan_pb);

@@ -17,7 +17,7 @@ func (s *Service) GenVoucherForPool(ctx context.Context, qty int64) ([]*model.Vo
 
 	for {
 		// Generate new gift codes
-		generatingCodes, err := s.genVoucherCodes(VoucherCodeLength, remainQty)
+		generatingCodes, err := s.genVoucherCodes(s.serviceCfg.VoucherCfg.Length, remainQty)
 		if err != nil {
 			return nil, err
 		}

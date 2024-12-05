@@ -2,3 +2,20 @@ service:
   purchase:
     host:
     port: 8602
+
+initFilePath:
+  campaign: ./config/data/campaign.json
+
+monitorCampaignCron:
+  cron:
+    id: "MONITOR_CAMPAIGN_SINGLE_POD"
+    spec: "@every 0h5m0s"
+    maxNonProgressSec: 604800
+    taskTimeout: 5m
+    disabled: false
+  cache:
+    duration: 1m
+    clientSideCacheDuration: 1m
+    prefix: "MCSP"
+  maxNotResponseSec: 25000
+  keepAliveDuration: 10s

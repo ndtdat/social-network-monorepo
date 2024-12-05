@@ -61,8 +61,6 @@ func (s *Service) Buy(
 			); err != nil {
 				return err
 			}
-
-			// Create transaction
 		}
 
 		// Upsert user tier

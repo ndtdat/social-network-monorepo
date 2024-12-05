@@ -25,6 +25,8 @@ var validate_validate_pb = require('../../validate/validate_pb.js');
 goog.object.extend(proto, validate_validate_pb);
 var purchase_model_detailed_subscription_plan_pb = require('../../purchase/model/detailed_subscription_plan_pb.js');
 goog.object.extend(proto, purchase_model_detailed_subscription_plan_pb);
+var purchase_model_subscription_plan_tier_pb = require('../../purchase/model/subscription_plan_tier_pb.js');
+goog.object.extend(proto, purchase_model_subscription_plan_tier_pb);
 goog.exportSymbol('proto.rpc.BuySubscriptionPlanReply', null, global);
 goog.exportSymbol('proto.rpc.BuySubscriptionPlanRequest', null, global);
 /**
@@ -101,7 +103,7 @@ proto.rpc.BuySubscriptionPlanRequest.prototype.toObject = function(opt_includeIn
  */
 proto.rpc.BuySubscriptionPlanRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    subscriptionPlanId: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    subscriptionPlanTier: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -139,8 +141,8 @@ proto.rpc.BuySubscriptionPlanRequest.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setSubscriptionPlanId(value);
+      var value = /** @type {!proto.model.SubscriptionPlanTier} */ (reader.readEnum());
+      msg.setSubscriptionPlanTier(value);
       break;
     default:
       reader.skipField();
@@ -171,9 +173,9 @@ proto.rpc.BuySubscriptionPlanRequest.prototype.serializeBinary = function() {
  */
 proto.rpc.BuySubscriptionPlanRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getSubscriptionPlanId();
-  if (f !== 0) {
-    writer.writeUint64(
+  f = message.getSubscriptionPlanTier();
+  if (f !== 0.0) {
+    writer.writeEnum(
       1,
       f
     );
@@ -182,20 +184,20 @@ proto.rpc.BuySubscriptionPlanRequest.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional uint64 subscription_plan_id = 1;
- * @return {number}
+ * optional model.SubscriptionPlanTier subscription_plan_tier = 1;
+ * @return {!proto.model.SubscriptionPlanTier}
  */
-proto.rpc.BuySubscriptionPlanRequest.prototype.getSubscriptionPlanId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+proto.rpc.BuySubscriptionPlanRequest.prototype.getSubscriptionPlanTier = function() {
+  return /** @type {!proto.model.SubscriptionPlanTier} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * @param {number} value
+ * @param {!proto.model.SubscriptionPlanTier} value
  * @return {!proto.rpc.BuySubscriptionPlanRequest} returns this
  */
-proto.rpc.BuySubscriptionPlanRequest.prototype.setSubscriptionPlanId = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+proto.rpc.BuySubscriptionPlanRequest.prototype.setSubscriptionPlanTier = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 

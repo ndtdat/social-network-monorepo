@@ -81,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `transactions` (
     `actual_amount` decimal(23,8) NOT NULL,
     `subscription_plan_tier` enum('SPT_BRONZE','SPT_SILVER','SPT_GOLD','SPT_PLATINUM') DEFAULT NULL,
     `user_voucher_id` bigint unsigned DEFAULT NULL,
-    `status` enum('UVS_ALLOCATED','UVS_USED','UVS_EXPIRED') NOT NULL,
     `created_at` bigint unsigned DEFAULT NULL,
     `updated_at` bigint unsigned DEFAULT NULL,
     PRIMARY KEY (`id`),

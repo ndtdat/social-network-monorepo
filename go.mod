@@ -1,8 +1,8 @@
 module github.com/ndtdat/social-network-monorepo
 
-go 1.22.7
+go 1.23.0
 
-toolchain go1.22.10
+toolchain go1.23.4
 
 require (
 	github.com/alioygur/godash v0.0.0-20160919141744-af6b3da41c5a
@@ -101,6 +101,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.1-0.20231216201459-8508981c8b6c // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/ndtdat/protoc-gen-gorm-enum v0.0.0-20241205160525-9e5f39406900 // indirect
 	github.com/outcaste-io/ristretto v0.2.3 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/philhofer/fwd v1.1.3-0.20240612014219-fbbf4953d986 // indirect

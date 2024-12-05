@@ -27,15 +27,18 @@ mysql:
 
 redis:
   host:
-  port: 6379
+  port: 6380
   db: 0
   password:
   disableRetry: true
   clientSideCaching:
-    enabled: false
+    enabled: true
     cacheSizeMegaBytes: 128
     broadcastMode: true
     prefixes:
+      - MVCSP # monitorVoucherConfigurationCron
+      - MUVSP # monitorUserVoucherCron
+      - PVCSP # provisionVoucherCodeCron
 
 jwt:
   algo: EDDSA

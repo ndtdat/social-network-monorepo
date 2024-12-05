@@ -4,12 +4,13 @@ package rpc;
 
 import "validate/validate.proto";
 import "purchase/model/detailed_subscription_plan.proto";
+import "purchase/model/subscription_plan_tier.proto";
 
 option go_package = "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/rpc;rpc";
 option optimize_for = SPEED;
 
 message BuySubscriptionPlanRequest {
-  uint64 subscription_plan_id = 1 [(validate.rules).uint64.gt = 1];
+  model.SubscriptionPlanTier subscription_plan_tier = 1 [(validate.rules).enum.not_in = 0];
 }
 
 message BuySubscriptionPlanReply {

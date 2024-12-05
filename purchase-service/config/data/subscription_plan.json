@@ -1,0 +1,22 @@
+[
+  {
+    "tier": 1,
+    "currencySymbol": "VND",
+    "price": "999000"
+  },
+  {
+    "tier": 2,
+    "currencySymbol": "VND",
+    "price": "1999000"
+  },
+  {
+    "tier": 3,
+    "currencySymbol": "VND",
+    "price": "2999000"
+  },
+  {
+    "tier": 4,
+    "currencySymbol": "VND",
+    "price": "3999000"
+  }
+]

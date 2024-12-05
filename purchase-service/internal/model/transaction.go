@@ -15,7 +15,7 @@ type Transaction struct {
 	ActualAmount   decimal.Decimal `gorm:"not null;type:decimal(23,8')"`
 
 	SubscriptionPlanTier model.SubscriptionPlanTier `gorm:"index;type:enum('SPT_BRONZE','SPT_SILVER','SPT_GOLD','SPT_PLATINUM');default:null"`
-	UserVoucherID        uint64                     `gorm:"index;default;null"`
+	UserVoucherID        uint64                     `gorm:"index;default:null"`
 
 	CreatedAt uint64
 	UpdatedAt uint64

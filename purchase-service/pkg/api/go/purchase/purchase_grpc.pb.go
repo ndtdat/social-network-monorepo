@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Purchase_IAllocateVoucherByCampaignID_FullMethodName = "/purchase.Purchase/IAllocateVoucherByCampaignID"
+	Purchase_BuySubscriptionPlan_FullMethodName          = "/purchase.Purchase/BuySubscriptionPlan"
 )
 
 // PurchaseClient is the client API for Purchase service.
@@ -29,6 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PurchaseClient interface {
 	IAllocateVoucherByCampaignID(ctx context.Context, in *rpc.IAllocateVoucherByCampaignIDRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	BuySubscriptionPlan(ctx context.Context, in *rpc.BuySubscriptionPlanRequest, opts ...grpc.CallOption) (*rpc.BuySubscriptionPlanReply, error)
 }
 
 type purchaseClient struct {
@@ -48,11 +50,21 @@ func (c *purchaseClient) IAllocateVoucherByCampaignID(ctx context.Context, in *r
 	return out, nil
 }
 
+func (c *purchaseClient) BuySubscriptionPlan(ctx context.Context, in *rpc.BuySubscriptionPlanRequest, opts ...grpc.CallOption) (*rpc.BuySubscriptionPlanReply, error) {
+	out := new(rpc.BuySubscriptionPlanReply)
+	err := c.cc.Invoke(ctx, Purchase_BuySubscriptionPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PurchaseServer is the server API for Purchase service.
 // All implementations must embed UnimplementedPurchaseServer
 // for forward compatibility
 type PurchaseServer interface {
 	IAllocateVoucherByCampaignID(context.Context, *rpc.IAllocateVoucherByCampaignIDRequest) (*emptypb.Empty, error)
+	BuySubscriptionPlan(context.Context, *rpc.BuySubscriptionPlanRequest) (*rpc.BuySubscriptionPlanReply, error)
 	mustEmbedUnimplementedPurchaseServer()
 }
 
@@ -62,6 +74,9 @@ type UnimplementedPurchaseServer struct {
 
 func (UnimplementedPurchaseServer) IAllocateVoucherByCampaignID(context.Context, *rpc.IAllocateVoucherByCampaignIDRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IAllocateVoucherByCampaignID not implemented")
+}
+func (UnimplementedPurchaseServer) BuySubscriptionPlan(context.Context, *rpc.BuySubscriptionPlanRequest) (*rpc.BuySubscriptionPlanReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuySubscriptionPlan not implemented")
 }
 func (UnimplementedPurchaseServer) mustEmbedUnimplementedPurchaseServer() {}
 
@@ -94,6 +109,24 @@ func _Purchase_IAllocateVoucherByCampaignID_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Purchase_BuySubscriptionPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(rpc.BuySubscriptionPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PurchaseServer).BuySubscriptionPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Purchase_BuySubscriptionPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PurchaseServer).BuySubscriptionPlan(ctx, req.(*rpc.BuySubscriptionPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Purchase_ServiceDesc is the grpc.ServiceDesc for Purchase service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +137,10 @@ var Purchase_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IAllocateVoucherByCampaignID",
 			Handler:    _Purchase_IAllocateVoucherByCampaignID_Handler,
+		},
+		{
+			MethodName: "BuySubscriptionPlan",
+			Handler:    _Purchase_BuySubscriptionPlan_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

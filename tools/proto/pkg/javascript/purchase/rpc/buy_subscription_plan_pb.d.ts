@@ -2,11 +2,12 @@ import * as jspb from 'google-protobuf'
 
 import * as validate_validate_pb from '../../validate/validate_pb';
 import * as purchase_model_detailed_subscription_plan_pb from '../../purchase/model/detailed_subscription_plan_pb';
+import * as purchase_model_subscription_plan_tier_pb from '../../purchase/model/subscription_plan_tier_pb';
 
 
 export class BuySubscriptionPlanRequest extends jspb.Message {
-  getSubscriptionPlanId(): number;
-  setSubscriptionPlanId(value: number): BuySubscriptionPlanRequest;
+  getSubscriptionPlanTier(): purchase_model_subscription_plan_tier_pb.SubscriptionPlanTier;
+  setSubscriptionPlanTier(value: purchase_model_subscription_plan_tier_pb.SubscriptionPlanTier): BuySubscriptionPlanRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): BuySubscriptionPlanRequest.AsObject;
@@ -18,7 +19,7 @@ export class BuySubscriptionPlanRequest extends jspb.Message {
 
 export namespace BuySubscriptionPlanRequest {
   export type AsObject = {
-    subscriptionPlanId: number,
+    subscriptionPlanTier: purchase_model_subscription_plan_tier_pb.SubscriptionPlanTier,
   }
 }
 

@@ -1,0 +1,50 @@
+initFilePath:
+  voucherCfg: ./config/data/voucher_configuration.json
+  subscriptionPlan: ./config/data/subscription_plan.json
+
+monitorVoucherConfigurationCron:
+  cron:
+    id: "MONITOR_VOUCHER_CONFIGURATION_SINGLE_POD"
+    spec: "@every 0h0m10s"
+    maxNonProgressSec: 604800
+    taskTimeout: 5m
+    disabled: false
+  cache:
+    duration: 1m
+    clientSideCacheDuration: 1m
+    prefix: "MVCSP"
+  maxNotResponseSec: 25000
+  keepAliveDuration: 10s
+
+monitorUserVoucherCron:
+  cron:
+    id: "MONITOR_USER_VOUCHER_SINGLE_POD"
+    spec: "@every 0h0m10s"
+    maxNonProgressSec: 604800
+    taskTimeout: 5m
+    disabled: false
+  cache:
+    duration: 1m
+    clientSideCacheDuration: 1m
+    prefix: "MUVSP"
+  maxNotResponseSec: 25000
+  keepAliveDuration: 10s
+
+provisionVoucherCodeCron:
+  cron:
+    id: "PROVISION_VOUCHER_CODE_SINGLE_POD"
+    spec: "@every 0h0m10s"
+    maxNonProgressSec: 604800
+    taskTimeout: 5m
+    disabled: false
+  cache:
+    duration: 1m
+    clientSideCacheDuration: 1m
+    prefix: "PVCSP"
+  maxNotResponseSec: 25000
+  keepAliveDuration: 10s
+  target: 200
+  maxPerRun: 50
+
+voucherCfg:
+  length: 10

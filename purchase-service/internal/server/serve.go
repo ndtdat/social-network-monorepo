@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/authn"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/authz"
+	"github.com/ndtdat/social-network-monorepo/gokit/pkg/cache/redis"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/cache/redissync"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/cache/rueidis"
 	grpcclient "github.com/ndtdat/social-network-monorepo/gokit/pkg/client/grpc"
@@ -18,6 +19,7 @@ import (
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/client"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/repository"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/service"
+	"github.com/ndtdat/social-network-monorepo/purchase-service/internal/service/self/cron/manager"
 	pb "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
@@ -41,6 +43,7 @@ func Run() {
 		service.Module,
 		grpcserver.Module,
 		mysql.Module,
+		redis.Module,
 		rueidis.Module,
 		redissync.Module,
 		fx.Provide(grpcclient.NewClient),
@@ -71,7 +74,7 @@ func registerAppHooks(
 				}
 
 				service.RegisterInternalServer(server)
-				if err := server.init(); err != nil {
+				if err := server.init(appContext); err != nil {
 					return err
 				}
 
@@ -81,7 +84,7 @@ func registerAppHooks(
 					pb.RegisterPurchaseServer(grpcServer, server)
 				}
 
-				go service.Serve(appContext, nil)
+				go service.Serve(appContext, pb.RegisterPurchaseHandler)
 
 				return nil
 			},
@@ -97,7 +100,7 @@ func registerAppHooks(
 func NewService(
 	appConfig *gokitcfg.App, authConfig *gokitcfg.Auth, logger *zap.Logger,
 	jwtManager jwtbase.Manager, grpcServer *grpc.Server, healthServer *health.Server,
-	microservices *client.MicroservicesManager, db *gorm.DB,
+	microservices *client.MicroservicesManager, db *gorm.DB, cronManager *manager.Manager,
 ) gokit.Service {
 	return gokit.NewService(
 		gokit.Logger(logger),
@@ -108,5 +111,6 @@ func NewService(
 		gokit.HealthServer(healthServer),
 		gokit.GRPCClientManager(microservices),
 		gokit.MySQL(db),
+		gokit.CronjobManager(cronManager),
 	)
 }

@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	model "github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/model"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = model.SubscriptionPlanTier(0)
 )
 
 // Validate checks the field values on BuySubscriptionPlanRequest with the
@@ -57,10 +61,10 @@ func (m *BuySubscriptionPlanRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetSubscriptionPlanId() <= 1 {
+	if _, ok := _BuySubscriptionPlanRequest_SubscriptionPlanTier_NotInLookup[m.GetSubscriptionPlanTier()]; ok {
 		err := BuySubscriptionPlanRequestValidationError{
-			field:  "SubscriptionPlanId",
-			reason: "value must be greater than 1",
+			field:  "SubscriptionPlanTier",
+			reason: "value must not be in list [0]",
 		}
 		if !all {
 			return err
@@ -147,6 +151,10 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = BuySubscriptionPlanRequestValidationError{}
+
+var _BuySubscriptionPlanRequest_SubscriptionPlanTier_NotInLookup = map[model.SubscriptionPlanTier]struct{}{
+	0: {},
+}
 
 // Validate checks the field values on BuySubscriptionPlanReply with the rules
 // defined in the proto definition for this message. If any rules are
