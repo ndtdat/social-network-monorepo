@@ -5,7 +5,7 @@ initFilePath:
 monitorVoucherConfigurationCron:
   cron:
     id: "MONITOR_VOUCHER_CONFIGURATION_SINGLE_POD"
-    spec: "@every 0h0m10s"
+    spec: "@every 0h1m0s"
     maxNonProgressSec: 604800
     taskTimeout: 5m
     disabled: false
@@ -19,7 +19,7 @@ monitorVoucherConfigurationCron:
 monitorUserVoucherCron:
   cron:
     id: "MONITOR_USER_VOUCHER_SINGLE_POD"
-    spec: "@every 0h0m10s"
+    spec: "@every 0h1m0s"
     maxNonProgressSec: 604800
     taskTimeout: 5m
     disabled: false
@@ -33,7 +33,7 @@ monitorUserVoucherCron:
 provisionVoucherCodeCron:
   cron:
     id: "PROVISION_VOUCHER_CODE_SINGLE_POD"
-    spec: "@every 0h0m10s"
+    spec: "@every 0h5m0s"
     maxNonProgressSec: 604800
     taskTimeout: 5m
     disabled: false
@@ -48,3 +48,4 @@ provisionVoucherCodeCron:
 
 voucherCfg:
   length: 10
+  expireDay: 30

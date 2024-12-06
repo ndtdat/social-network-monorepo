@@ -11,10 +11,9 @@ import (
 	"time"
 )
 
-const ExpireDay = 30
-
 func (s *Service) AllocateByCampaignID(ctx context.Context, userID, campaignID uint64) error {
 	var (
+		voucherPoolRepo   = s.voucherPoolRepo
 		configurationRepo = s.configurationRepo
 		now               = time.Now()
 	)
@@ -33,7 +32,7 @@ func (s *Service) AllocateByCampaignID(ctx context.Context, userID, campaignID u
 		ID:                     suid.New(),
 		UserID:                 userID,
 		VoucherConfigurationID: voucherConfigurationID,
-		ExpiredAt:              uint64(now.AddDate(0, 0, ExpireDay).Unix()),
+		ExpiredAt:              uint64(now.AddDate(0, 0, s.serviceCfg.VoucherCfg.ExpireDay).Unix()),
 		Status:                 model2.UserVoucherStatus_UVS_ALLOCATED,
 	}
 
@@ -41,7 +40,7 @@ func (s *Service) AllocateByCampaignID(ctx context.Context, userID, campaignID u
 		tx = tx.WithContext(ctx)
 
 		// Get code from pool
-		code, err := s.voucherPoolRepo.SelectFirstForUpdate(tx, []*sorter.Sorter{
+		code, err := voucherPoolRepo.SelectFirstForUpdate(tx, []*sorter.Sorter{
 			{
 				Field: model.VoucherPool_CREATED_AT,
 				Order: sorter.Order_ASC,
@@ -59,6 +58,10 @@ func (s *Service) AllocateByCampaignID(ctx context.Context, userID, campaignID u
 		// Create user voucher
 		userVoucher.VoucherCode = code
 		if err = s.userVoucherRepo.CreateWithTx(tx, userVoucher); err != nil {
+			return err
+		}
+
+		if err = voucherPoolRepo.DeleteWithTx(tx, code); err != nil {
 			return err
 		}
 

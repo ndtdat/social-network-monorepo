@@ -6,12 +6,15 @@ import (
 	model2 "github.com/ndtdat/social-network-monorepo/purchase-service/internal/model"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/model"
 	"github.com/ndtdat/social-network-monorepo/purchase-service/pkg/api/go/purchase/rpc"
+	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
 
 func (s *Service) Buy(
 	ctx context.Context, userID uint64, subscriptionPlanTier model.SubscriptionPlanTier,
 ) (*rpc.BuySubscriptionPlanReply, error) {
+	// TODO: Get balance and check if user is enough money to buy plan package
+
 	// Get subscription plan
 	subscriptionPlan, err := s.subscriptionPlanRepo.FirstByFilters(ctx, subscriptionPlanTier)
 	if err != nil {
@@ -73,12 +76,15 @@ func (s *Service) Buy(
 			return err
 		}
 
-		// TODO: Call payment to debit user's balance
+		if txInfo.ActualAmount.GreaterThan(decimal.Zero) {
+			// TODO: Call payment to debit user's balance
+		}
 
 		return nil
 	}); err != nil {
 		return nil, err
 	}
 
+	// TODO: Return data
 	return &rpc.BuySubscriptionPlanReply{}, nil
 }

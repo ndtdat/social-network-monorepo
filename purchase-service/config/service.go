@@ -39,5 +39,6 @@ type ProvisionVoucherCodeCron struct {
 }
 
 type VoucherCfg struct {
-	Length int `mapstructure:"length"`
+	Length    int `mapstructure:"length"`
+	ExpireDay int `mapstructure:"expireDay"`
 }
