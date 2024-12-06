@@ -15,6 +15,7 @@
   "produces": [
     "application/json"
   ],
+  "host": "locahost:9091",
   "paths": {
     "/api/user/login": {
       "post": {

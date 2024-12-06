@@ -15,6 +15,7 @@
   "produces": [
     "application/json"
   ],
+  "host": "locahost:9092",
   "paths": {
     "/api/purchase/buy": {
       "post": {

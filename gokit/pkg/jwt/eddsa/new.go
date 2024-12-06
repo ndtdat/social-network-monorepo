@@ -38,13 +38,11 @@ func NewManager(
 	privateKeyCfg := JWTCfg.PrivateKey
 	publicKeyCfg := JWTCfg.PublicKey
 
-	privateKeySecretName := privateKeyCfg.Secret.Name
 	privateKeyFile := privateKeyCfg.File
 
-	publicKeySecretName := publicKeyCfg.Secret.Name
 	publicKeyFile := publicKeyCfg.File
 
-	if publicKeySecretName == "" && publicKeyFile == "" {
+	if publicKeyFile == "" {
 		return nil, fmt.Errorf("public key secret name or public key file must be exist")
 	}
 
@@ -56,13 +54,13 @@ func NewManager(
 
 	currPrivateKeyVersion := "1"
 
-	if privateKeyFile != "" && privateKeySecretName == "" {
+	if privateKeyFile != "" {
 		if ecPrivateKey, err = LoadPrivateKey(privateKeyFile); err != nil {
 			return nil, err
 		}
 	}
 
-	if publicKeyFile != "" && publicKeySecretName == "" {
+	if publicKeyFile != "" {
 		publicKeyMap, err = InitPublicKeyMapFromFile(publicKeyFile, currPrivateKeyVersion)
 	}
 
@@ -74,9 +72,7 @@ func NewManager(
 		alg:                   kJwt.EdDSA,
 		publicKeyMap:          publicKeyMap,
 		logger:                logger,
-		privateKeySecretName:  privateKeySecretName,
 		currPrivateKeyVersion: currPrivateKeyVersion,
-		publicKeySecretName:   publicKeySecretName,
 		issuer:                JWTCfg.Issuer,
 		privateKey:            ecPrivateKey,
 		accessTokenDuration:   JWTCfg.AccessTokenDuration,

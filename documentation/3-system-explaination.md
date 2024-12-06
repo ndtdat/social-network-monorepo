@@ -1,86 +1,86 @@
-# Agents of system
+# Agents of the system
 
 My system has 2 agents: Operator and User.
 
-Operator has roles (not support yet):
-- Create campaigns, voucher configuration and relation between them.
-- Can stop a running campaign or a running voucher as them need.
-- Can statistics.
+Operator has roles (not yet support):
+- Create campaigns, configure vouchers, and define relationships between them.
+- Stop an active campaign or voucher when needed.
+- View statistics.
 
-User able to:
-- Register with campaign code (optional).
-- Buy subscription plan if want to upgrade higher tier.
+Users are able to:
+- Register with an optional campaign code.
+- Purchase a subscription plan to upgrade to a higher tier if desired.
 
 ---
-# Services and its description
+# Services and their description
 
-My system includes 2 services:
+My system includes two services:
 - User service:
-    - Role: Manage users and campaigns.
+    - Role: Manages users and campaigns.
     - APIs:
         - Register (public).
         - Login (public).
     - Cronjobs:
-        - Monitor campaigns: Check and mark unavailable if campaign is expired.
+        - Monitor campaigns: Checks and marks campaigns as unavailable if they are expired.
 - Purchase service:
-    - Role: Manage voucher codes, subscription plan and user tier.
+    - Role: Manages voucher codes, subscription plans, and user tiers.
     - APIs:
-        - BuySubscriptionPlan (required access token).
+        - BuySubscriptionPlan (requires access token).
     - Cronjobs:
-        - Monitor voucher configuration: Check and mark unavailable if voucher configuration is expired.
-        - Monitor user voucher: Check and mark unavailable if user voucher is expired.
-        - Provision voucher codes for pool: Generate enough codes for pool.
+        - Monitor voucher configuration: Checks and marks voucher configurations as unavailable if they are expired.
+        - Monitor user voucher: Checks and marks user vouchers as unavailable if they are expired.
+        - Provision voucher codes for pool: Generates a sufficient number of voucher codes for the pool.
 
 ---
 # Service explanation
-My system includes 2 services:
+My system includes two services:
 - User service:
-    - Role: Manage users and campaigns.
+    - Role: Manages users and campaigns.
     - Description:
         - Register (API):
-            - (1) Check if account is existed => Return if existed.
-            - (2) Check if campaign code is valid => Ignore if invalid and go to (4)
-            - (3) Trigger allocate voucher for this user.
-            - (4) Create users and return access token.
-            - Note: Create user, update campaign and allocate voucher must be in transaction operation because they are rollback when error.
+            - (1) Check if the account already exists and return a response if it does.
+            - (2) Check if the campaign code is valid. If invalid, proceed to (4).
+            - (3) Trigger the allocation of a voucher for the user.
+            - (4) Create the user account and return an access token.
+            - Note: The operations of creating a user, updating the campaign, and allocating a voucher must be performed as a transaction to ensure a rollback in case of an error.
         - Login (API):
-            - (1) Check if account is existed => Return fail if not existed.
-            - (2) Check if password is correct => Return fail if incorrect.
-            - (3) Return access token.
+            - (1) Check if the account exists and return a failure response if not.
+            - (2) Verify if the password is correct and return a failure response if incorrect.
+            - (3) Return an access token upon successful authentication.
         - Monitor campaign (task background):
-            - Run per 1 minutes by cronjob.
-            - Mark Unavailable for campaign has end_at < now.
+            - Runs every minute via a cron job.
+            - Marks campaigns as "Unavailable" if end_at is less than the current time.
 - Purchase service:
-    - Role: Manage subscription plan and voucher.
+    - Role: Manages subscription plans and vouchers.
     - Description:
         - Buy Subscription Plan (API):
-            - (1) Get user balance from payment-service (coming soon).
-            - (2) Get subscription plan info and current user's tier.
-            - (3) Check if tier that user want to buy is greater than current tier.
-            - (4) Check if user has any valid voucher to apply for this buying => If exists, calculate discount amount.
-            - (5) In transactional operation:
-                - Mark user voucher is used.
-                - Update new user tier.
-                - Create transaction including buying info.
-                - Call payment to debit user balance (coming soon).
+            - (1) Retrieve the user's balance from the payment service (coming soon).
+            - (2) Fetch the subscription plan information and the current user's tier.
+            - (3) Check if the tier the user wants to purchase is higher than their current tier.
+            - (4) Verify if the user has any valid voucher to apply to the purchase. If a valid voucher exists, calculate the discount amount.
+            - (5) Perform the following operations in a transactional manner:
+              - Mark the user voucher as used.
+              - Update the user's tier.
+              - Create a transaction record with the purchase details.
+              - Call the payment service to debit the user's balance (coming soon).
         - Allocate Voucher (Internal call):
-            - (1) Check if exists valid voucher based on campaign id. Valid voucher must be available status and not ended yet.
-            - (2) Create voucher for user in transactional operation:
-                - Get voucher code from pool.
-                - Create user voucher with Allocated status.
-                - Update voucher configuration: increase allocated_qty, if allocated_qty >= max_qty => mark it Unavailable.
-                - Delete used voucher code in pool.
+            - (1) Check for a valid voucher based on the campaign ID. The voucher must be in "available" status and not expired.
+            - (2) Create a voucher for the user in a transactional operation:
+              - Retrieve a voucher code from the pool.
+              - Create a user voucher with "Allocated" status.
+              - Update the voucher configuration to increase allocated_qty. If allocated_qty reaches max_qty, mark the configuration as "Unavailable".
+              - Remove the used voucher code from the pool.
         - Monitor voucher configuration (background task):
-            - Run per 1 minutes by cronjob.
-            - Mark Unavailable for voucher configuration has end_at < now.
+            - Runs every minute via a cron job.
+            - Marks voucher configurations as "Unavailable" if end_at is less than the current time.
         - Monitor user voucher (background task):
-            - Run per 1 minutes by cronjob.
-            - Mark Expired for voucher configuration has expire_at < now.
+            - Runs every minute via a cron job.
+            - Marks user vouchers as "Expired" if expire_at is less than the current time.
         - Provision voucher code pool (background task):
-            - Run per 5 minutes by cronjob.
-            - Generate voucher codes such that number of pool qty is equal to target.
-                - (1) Generate missing qty by rules.
-                - (2) Check if exists in the pool.
-                - (3) Check if it's used by user.
-                - (4) Continue go to (1) if not enough.
-                - (5) Create generated codes for pool.
+            - Runs every 5 minutes via a cron job.
+            - Generates enough voucher codes to maintain the target pool quantity:
+              - (1) Generate missing quantities according to rules.
+              - (2) Ensure generated codes do not already exist in the pool.
+              - (3) Verify that generated codes have not been used by any user.
+              - (4) Repeat step (1) if the pool does not have enough codes.
+              - (5) Add generated codes to the pool.

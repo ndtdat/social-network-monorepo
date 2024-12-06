@@ -4,30 +4,11 @@ import (
 	"context"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/common"
 	"github.com/ndtdat/social-network-monorepo/gokit/pkg/jwt/base"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"strings"
 )
 
 var defaultAcceptLanguage = "en-US,en;q=0.9"
-
-func SetIdentityClaimsIntoHeader(ctx context.Context, stream grpc.ServerStream, claims *base.Identity) error {
-	inMd, ok := metadata.FromIncomingContext(ctx)
-	var newInMd metadata.MD
-
-	if !ok {
-		newInMd = metadata.New(nil)
-	} else {
-		newInMd = inMd.Copy()
-	}
-
-	newInMd.Set(common.IdentityIDHeader, claims.ID)
-	newInMd.Set(common.IdentityRolesHeader, EncodeIdentityRolesHeader(claims.Roles))
-	newInMd.Set(common.IdentityMetadataHeader, EncodeIdentityMetadataHeader(claims.Metadata))
-	newInMd.Set(common.IdentityAPIKeyHeader, EncodeIdentityAPIKeyHeader(claims.APIKey))
-
-	return stream.SetHeader(newInMd)
-}
 
 func SetIdentityClaims(ctx context.Context, claims *base.Identity) context.Context {
 	inMd, ok := metadata.FromIncomingContext(ctx)
@@ -56,25 +37,8 @@ func IdentityClaimsFromCtx(ctx context.Context) *base.Identity {
 	return IdentityClaimsFromMD(inMd)
 }
 
-func AcceptLanguageFromCtx(ctx context.Context) string {
-	language := FieldFromIncomingCtx(ctx, common.AcceptLanguage)
-	if language == "" {
-		return defaultAcceptLanguage
-	}
-
-	return language
-}
-
-func XForwardedForFromCtx(ctx context.Context) string {
-	return FieldFromIncomingCtx(ctx, common.XForwardedForHeader)
-}
-
 func ClientIPFromCtx(ctx context.Context) string {
 	return FieldFromIncomingCtx(ctx, common.ClientIPHeader)
-}
-
-func DomainFromCtx(ctx context.Context) string {
-	return FieldFromIncomingCtx(ctx, common.DomainHeader)
 }
 
 func DeviceIDFromCtx(ctx context.Context) string {
@@ -119,10 +83,6 @@ func IdentityClaimsFromMD(inMd metadata.MD) *base.Identity {
 	claims.DeviceID = deviceID
 
 	return &claims
-}
-
-func IsInternalCall(ctx context.Context) bool {
-	return FieldFromIncomingCtx(ctx, common.InternalCallHeader) == "true"
 }
 
 func EncodeIdentityRolesHeader(roles []string) string {

@@ -44,12 +44,6 @@ jwt:
   algo: EDDSA
   publicKey:
     file: config/local_jwt/pk.pem
-    secret:
-      name:
-  privateKey:
-    file: config/local_jwt/sk.pem
-    secret:
-      name:
   issuer: TIENDAT
   accessTokenDuration: 24h
   refreshTokenDuration: 240h

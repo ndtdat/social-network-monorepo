@@ -4,16 +4,13 @@
 Note: All files had already initialized in this source code. 
 
 ## Initialize campaigns:
-- In this demo phase, I initialize data from `./user-service/config/data/campaign.json`.
-- For real, we must initialize by Back Office service.
+- In this demo phase, I initialize the data from `./user-service/config/data/campaign.json`.
 
 ## Initialize subscription plans:
-- In this demo phase, I initialize data from `./purchase-service/config/data/subscription_plan.json`.
-- For real, we must initialize by Back Office service.
+- In this demo phase, I initialize the data from `./purchase-service/config/data/subscription_plan.json`.
 
 ## Initialize voucher configurations:
-- In this demo phase, I initialize data from `./purchase-service/config/data/voucher_configuration.json`.
-- For real, we must initialize by Back Office service.
+- In this demo phase, I initialize the data from `./purchase-service/config/data/voucher_configuration.json`.
 
 ## Create a key pair for JWT using Ed25519 algorithm:
 
@@ -66,6 +63,7 @@ openssl pkey -in private_key.pem -pubout -out pk.pem
 - Run `user-service`:
   ```shell
   cd network-social-monorepo/user-service
+  go mod tidy
   go run cmd/main.go
   ```
 - Run `purchase-service`:
@@ -73,7 +71,7 @@ openssl pkey -in private_key.pem -pubout -out pk.pem
   cd network-social-monorepo/purchase-service
   go run cmd/main.go
   ```
-- And now, you're able to test APIs by cURL, Postman,... Here is cURL:
+- And now, you're able to test the APIs by cURL, Postman,... Here is cURL:
   - Register:
   ```shell
   curl --location 'localhost:9091/api/user/register' \
@@ -93,7 +91,7 @@ openssl pkey -in private_key.pem -pubout -out pk.pem
   "password": "12345678"
   }'
   ```
-  - Buy Subscription Plan, replace ****** to your access token:
+  - Buy Subscription Plan, replace `******` to your access token:
   ```shell
   curl --location 'localhost:9092/api/purchase/buy' \
   --header 'Content-Type: application/json' \
