@@ -1,3 +1,6 @@
+# SYSTEM EXPLAINATION
+You can be found it in `documentation` directory, all in there.
+
 # INSTRUCTION FOR RUNNING SOURCE CODE ON LOCAL
 
 # Preparation
